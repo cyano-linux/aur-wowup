@@ -3,7 +3,7 @@
 _pkgbase=WowUp
 pkgbase=${_pkgbase,,}
 pkgname=($pkgbase $pkgbase-cf)
-_pkgver=2.20.0
+_pkgver=2.22.0
 pkgver=${_pkgver/-/.}
 pkgrel=1
 pkgdesc='World of Warcraft addon updater'
@@ -13,7 +13,7 @@ url='https://github.com/WowUp/WowUp'
 license=('GPL3')
 # no depends
 makedepends=(
-    'nodejs-lts-iron' # may fail with latest nodejs, use lts
+    'nodejs-lts-krypton' # may fail with latest nodejs, use lts
     'npm'
     'imagemagick'
 )
@@ -26,7 +26,7 @@ source=(
     run_wowup.sh
     run_wowup-cf.sh
 )
-sha256sums=('217b44662b7136473071a9b8073ea7c2018ddec82e050e023bfdab70d0bae481'
+sha256sums=('60724a35936c028a6711b613e441bbb0b13d3d7ae50d4628f29464648568fbe3'
             '6492656d15dc74254189767f92a3d6d73ee21d2de952ae8586a40330dc0b6ef3'
             '371d0e19917b031911ac5503e01e19170988230fb793f68e42eb15e4d1cfb97c'
             '5c18235b5c92c98a405335916efce577c8b9b5582b717abb1c49834884fbe1db'
@@ -49,7 +49,11 @@ prepare() {
 }
 
 build() {
-    cd "$_pkgbase-$_pkgver/wowup-electron"
+    cd "$srcdir/$_pkgbase-$_pkgver/wowup-lib"
+
+    npm install
+
+    cd "$srcdir/$_pkgbase-$_pkgver/wowup-electron"
 
     # Angular may ask for sharing anonymous usage data during `npm install`.
     # Say “no” to it.
